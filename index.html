@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2196F3;
+        }
+
+        #students-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .student-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 5px;
+            font-size: 1.1em;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s;
+        }
+
+        .student-card:hover {
+            background-color: #f1f1f1;
+        }
+
+        .student-card span {
+            font-size: 1.5em;
+        }
+
+        
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        #stud-name {
+            padding: 10px;
+            font-size: 1em;
+            width: 100%;
+            max-width: 300px;
+            border: 2px solid #2196F3;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #stud-name:focus {
+            border-color: #1976D2;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        button:hover {
+            background-color: #1976D2; 
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Layout for Small Screens */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            #students-list {
+                padding: 5px;
+            }
+
+            .student-card {
+                font-size: 1em;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Students</h1>
+    <div id="students-list"></div>
+
+    <div id="container">
+        <input type="text" id="stud-name" placeholder="Enter student name" />
+        <button type="button" id="addbtn" onclick="addStudent()">Add student</button>
+        <button type="button" id="removebtn" onclick="removeStudent()">Remove student</button>
+    </div>
+
+    <script>
+        const Student = [
+            "Diya",
+            "Siddhi",
+            "Shrawani",
+            "Vaishnavi",
+            "Prerna",
+            "Dipti"
+        ];
+
+        
+        const Emoji = ['😊', '❤️', '😒', '😁', '😍', '😉', '👍', '💕', '🎉', '🌟', '🤩', '😎', '🎶', '🌈', '✨'];
+
+        function getRandom() {
+            const min = 0;
+            const max = Emoji.length - 1;
+            const randomIndex = Math.floor(Math.random() * (max - min + 1)) + min;
+            return Emoji[randomIndex];
+        }
+
+        function loadStudent() {
+            const studentContainer = document.getElementById("students-list");
+            studentContainer.innerHTML = ""; 
+            for (let i = 0; i < Student.length; i++) {
+                studentContainer.innerHTML += `<div class='student-card'>${getRandom()} ${i + 1}) ${Student[i]}</div>`;
+            }
+        }
+
+        loadStudent(); 
+
+        const studentInput = document.getElementById("stud-name");
+
+        function addStudent() {
+            const studentName = studentInput.value.trim();
+            if (studentName) {
+                Student.push(studentName);
+                studentInput.value = ""; 
+                showNotification("Student added successfully");
+                loadStudent();
+            } else {
+                showNotification("Please enter a student name.");
+            }
+        }
+
+        function removeStudent() {
+            const studentName = studentInput.value.trim();
+            if (studentName) {
+                const studentIndex = Student.indexOf(studentName);
+                if (studentIndex > -1) {
+                    Student.splice(studentIndex, 1);
+                    studentInput.value = ""; 
+                    showNotification("Student removed successfully");
+                    loadStudent();
+                } else {
+                    showNotification("Student not found.");
+                }
+            } else {
+                showNotification("Please enter a student name to remove.");
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById("notification");
+            notification.innerText = message;
+            notification.style.display = "block";
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
