@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        
         * {
             margin: 0;
             padding: 0;
@@ -61,7 +60,6 @@
             font-size: 1.5em;
         }
 
-        
         #container {
             display: flex;
             flex-direction: column;
@@ -112,7 +110,7 @@
             cursor: not-allowed;
         }
 
-        /* Responsive Layout for Small Screens */
+        
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.5rem;
@@ -149,7 +147,6 @@
             "Dipti"
         ];
 
-        
         const Emoji = ['😊', '❤️', '😒', '😁', '😍', '😉', '👍', '💕', '🎉', '🌟', '🤩', '😎', '🎶', '🌈', '✨'];
 
         function getRandom() {
@@ -176,10 +173,9 @@
             if (studentName) {
                 Student.push(studentName);
                 studentInput.value = ""; 
-                showNotification("Student added successfully");
                 loadStudent();
             } else {
-                showNotification("Please enter a student name.");
+                alert("Please enter a student name.");
             }
         }
 
@@ -190,23 +186,13 @@
                 if (studentIndex > -1) {
                     Student.splice(studentIndex, 1);
                     studentInput.value = ""; 
-                    showNotification("Student removed successfully");
                     loadStudent();
                 } else {
-                    showNotification("Student not found.");
+                    alert("Student not found.");
                 }
             } else {
-                showNotification("Please enter a student name to remove.");
+                alert("Please enter a student name to remove.");
             }
-        }
-
-        function showNotification(message) {
-            const notification = document.getElementById("notification");
-            notification.innerText = message;
-            notification.style.display = "block";
-            setTimeout(() => {
-                notification.style.display = "none";
-            }, 2000);
         }
     </script>
 </body>
